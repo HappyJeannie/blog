@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <style>
+    #wrapper{
+      position:relative;
+      padding:20px;
+    
+    }
+    body{
+      width:100vw;
+      height:100vh;
+      border:1px solid #e6e6e6;
+    }
+    *{
+      padding:0px;
+      margin:0px;
+    }
+    #box{
+      position:absolute;
+      left:82px;
+      top:20px;
+      font-size:14px;
+      border:1px solid #f00;
+      padding:10px;
+      border-radius:4px;
+      background:#fff;
+      cursor:default;
+      display:none;
+    }
+    #box:after{
+      content:'';
+      position:absolute;
+      right:96%;
+      top:4px;
+      display:block;
+      border:10px solid transparent;
+      border-right-color:#fff;
+      
+    }
+    #box:before{
+      content:'';
+      position:absolute;
+      right:100%;
+      top:4px;
+      display:block;
+      border:10px solid transparent;
+      border-right-color:red;
+    }
+    button{
+      padding:4px 10px;
+      border-radius:4px;
+      position:relative;
+      z-index:3;
+    }
+  </style>
+</head>
+<body id="body">
+  <div id="wrapper">
+    <button id="btn">开/关</button>
+    <div id="box">
+      浮层
+    </div>
+  </div>
+  <script>
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      box.style.display = box.style.display === 'block'? 'none':'block';
+    })
+    body.addEventListener('click',function(){
+      box.style.display = 'none';
+    })
+    box.addEventListener('click',function(e){
+      e.stopPropagation();
+    })
+  </script>
+</body>
+</html>
