@@ -26,11 +26,22 @@ var server = http.createServer((req,res)=>{
     res.setHeader('Content-Type','applocation/javascript')
     res.write(str);
     res.end();
-  }else if(path === '/pay' && method.toUpperCase() === 'POST'){
-    let num = fs.readFileSync('./db','utf8')
-    let newNum = parseInt(num) - 1;
-    fs.writeFileSync('./db',newNum);
-    res.write('success');
+  }else if(path === '/pay'){
+    if(Math.random() > .5){
+      let num = fs.readFileSync('./db','utf8')
+      let newNum = parseInt(num) - 1;
+      res.setHeader('Content-Type','applocation/javascript')
+      fs.writeFileSync('./db',newNum);
+      res.statusCode = 200;
+      res.write(`
+        ${query.callback}.call(undefined,'success');
+      `);
+    }else{
+      res.statusCode = 400;
+      res.write(`
+        ${query.callback}.call(undefined,'fail');
+      `);  
+    }
     res.end();
   }else{
     let str = "出错";

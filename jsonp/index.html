@@ -5,10 +5,31 @@
 </head>
 <body>
   <h4>您的账户余额是<span id="mount">&&&mount&&&</span></h4>
-  <form action="/pay" method="post" target="result">
-    <button id="btn" type="submit">付款</button>
-  </form>
-  <iframe src="about:blank" name="result" frameborder="0" height="200"></iframe>
+  <button id="btn">付款</button>
   <script type='text/javascript' src='/main.js'></script>
+  <script>
+    btn.addEventListener('click',function(){
+      let script = document.createElement('script');
+      let funcName = 'summer' + parseInt(Math.random() * 100000 , 10 );
+      window[funcName] = function(res){
+        if(res === 'success'){
+          mount.innerText = mount.innerText - 1;
+        }else{
+          alert('请求失败');
+        }
+      }
+      script.src = 'http://winter.com:8001/pay?callback='+funcName;
+      document.body.appendChild(script);
+      script.onload = function(e){
+        e.currentTarget.remove();
+        delete window[funcName];
+      }
+      script.onerror = function(e){
+        alert('fail');
+        e.currentTarget.remove();
+        delete window[funcName];
+      }
+    })
+  </script>
 </body>
 </html>
